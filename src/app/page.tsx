@@ -11,19 +11,22 @@ function LandscapeHero() {
     const canvas = ref.current!;
     const ctx = canvas.getContext('2d')!;
 
-    let mx = 0.5, my = 0.5, tmx = 0.5, tmy = 0.5;
+    // ── Offscreen cache canvases ────────────────────────────────────────────
+    // bgC  — sky + horizon amber glow          (rebuilt on resize only)
+    // mtC  — mountains + fog + hill             (rebuilt when parallax changes)
+    // clC  — cloud layer                        (rebuilt at ~6 fps)
+    // ovC  — ground fade + vignettes            (rebuilt on resize only)
+    const bgC = document.createElement('canvas'); const bgX = bgC.getContext('2d')!;
+    const mtC = document.createElement('canvas'); const mtX = mtC.getContext('2d')!;
+    const clC = document.createElement('canvas'); const clX = clC.getContext('2d')!;
+    const ovC = document.createElement('canvas'); const ovX = ovC.getContext('2d')!;
 
-    const resize = () => {
-      canvas.width  = canvas.offsetWidth;
-      canvas.height = canvas.offsetHeight;
-    };
-    resize();
-    const ro = new ResizeObserver(resize);
-    ro.observe(canvas);
-    window.addEventListener('mousemove', (e) => {
-      tmx = e.clientX / window.innerWidth;
-      tmy = e.clientY / window.innerHeight;
-    });
+    let mx = 0.5, tmx = 0.5;
+    let lastMoveTime = 0;   // performance.now() of last mousemove
+    let lastDrawTs   = 0;   // timestamp of last actual paint
+    let lastCloudTs  = 0;   // timestamp of last cloud cache rebuild
+    let lastMxn      = 999; // force first mountain draw
+    let t = 0;              // animation clock (60fps-equivalent units)
 
     // ── Stars ──────────────────────────────────────────────────────────────
     const STARS = Array.from({ length: 210 }, () => ({
@@ -34,15 +37,17 @@ function LandscapeHero() {
       br: 0.22 + Math.random() * 0.52,
     }));
 
-    // ── Mountain layers (back→front) ────────────────────────────────────────
+    // ── Mountain layers ─────────────────────────────────────────────────────
     const LAYERS = [
       { yFrac: 0.54, par: 5,  rgb: [18, 36, 74] as const,  waves: [[0.00138,0,88],[0.003,2.1,40],[0.007,5,13]] as const },
       { yFrac: 0.59, par: 15, rgb: [11, 22, 52] as const,  waves: [[0.00175,1.2,76],[0.004,4.3,34],[0.009,7,10]] as const },
       { yFrac: 0.63, par: 30, rgb: [7,  14, 36] as const,  waves: [[0.0022,3.1,66],[0.005,6.5,28],[0.012,2,8]] as const },
       { yFrac: 0.68, par: 50, rgb: [4,  9,  23] as const,  waves: [[0.0028,5.2,58],[0.007,1.8,22],[0.016,8,6]] as const },
     ];
+    const wave = (x: number, ws: readonly (readonly number[])[], ox: number) =>
+      ws.reduce((h, [f, p, a]) => h + Math.sin((x + ox) * f + p) * a, 0);
 
-    // ── Clouds ──────────────────────────────────────────────────────────────
+    // ── Clouds ─────────────────────────────────────────────────────────────
     const CLOUDS = Array.from({ length: 7 }, () => ({
       x: Math.random(),
       y: 0.06 + Math.random() * 0.26,
@@ -62,23 +67,16 @@ function LandscapeHero() {
     type Flock = { x: number; y: number; vx: number; sz: number; birds: BirdUnit[]; life: number; max: number };
     let flock: Flock | null = null;
     let flockTimer = 700 + Math.floor(Math.random() * 900);
-
     const spawnFlock = (W: number, H: number) => {
-      const left = Math.random() > 0.5;
-      const spd  = 0.34 + Math.random() * 0.22;
-      const n    = 2 + Math.floor(Math.random() * 3);
+      const left = Math.random() > 0.5, spd = 0.34 + Math.random() * 0.22, n = 2 + Math.floor(Math.random() * 3);
       flock = {
-        x: left ? -55 : W + 55,
-        y: H * (0.09 + Math.random() * 0.22),
-        vx: left ? spd : -spd,
-        sz: 6.5 + Math.random() * 5,
+        x: left ? -55 : W + 55, y: H * (0.09 + Math.random() * 0.22),
+        vx: left ? spd : -spd, sz: 6.5 + Math.random() * 5,
         birds: Array.from({ length: n }, (_, i) => ({
           ox: (left ? 1 : -1) * i * (13 + Math.random() * 13),
-          oy: (Math.random() - 0.5) * 20,
-          wt: Math.random() * Math.PI * 2,
+          oy: (Math.random() - 0.5) * 20, wt: Math.random() * Math.PI * 2,
         })),
-        life: 0,
-        max: Math.ceil((W + 110) / spd),
+        life: 0, max: Math.ceil((W + 110) / spd),
       };
       flockTimer = 1600 + Math.floor(Math.random() * 2200);
     };
@@ -87,229 +85,209 @@ function LandscapeHero() {
     type Fp = { x: number; y: number; vx: number; vy: number; life: number; max: number; r: number };
     const fps: Fp[] = [];
 
-    // ── Wave helper ─────────────────────────────────────────────────────────
-    const wave = (x: number, ws: readonly (readonly number[])[], ox: number) =>
-      ws.reduce((h, [f, p, a]) => h + Math.sin((x + ox) * f + p) * a, 0);
+    // ── Cache builders (called on resize or when parallax shifts) ───────────
+    const buildBg = (W: number, H: number) => {
+      bgC.width = W; bgC.height = H;
+      const sky = bgX.createLinearGradient(0, 0, 0, H);
+      sky.addColorStop(0, '#010407'); sky.addColorStop(0.28, '#04091a');
+      sky.addColorStop(0.58, '#0a1a32'); sky.addColorStop(0.8, '#122540');
+      sky.addColorStop(1, '#1a3250');
+      bgX.fillStyle = sky; bgX.fillRect(0, 0, W, H);
+      const hg = bgX.createRadialGradient(W*.5, H*.61, 0, W*.5, H*.61, W*.52);
+      hg.addColorStop(0, 'rgba(212,168,67,0.088)'); hg.addColorStop(0.32, 'rgba(185,105,28,0.038)');
+      hg.addColorStop(0.65, 'rgba(110,52,8,0.012)'); hg.addColorStop(1, 'rgba(0,0,0,0)');
+      bgX.fillStyle = hg; bgX.fillRect(0, 0, W, H);
+    };
 
-    let t = 0, animId: number;
+    const buildMt = (W: number, H: number, mxn: number) => {
+      mtC.width = W; mtC.height = H;
+      mtX.clearRect(0, 0, W, H);
+      LAYERS.forEach(({ yFrac, par, rgb, waves }) => {
+        const ox = -mxn * par * W * 0.013, baseY = H * yFrac, [r, g, b] = rgb;
+        mtX.beginPath(); mtX.moveTo(-20, H);
+        for (let x = -20; x <= W + 20; x += 2) mtX.lineTo(x, baseY - wave(x, waves, ox));
+        mtX.lineTo(W + 20, H); mtX.closePath();
+        mtX.fillStyle = `rgb(${r},${g},${b})`; mtX.fill();
+      });
+      const fogY = H * 0.69;
+      const fog = mtX.createLinearGradient(0, fogY - 28, 0, fogY + H * 0.09);
+      fog.addColorStop(0, 'rgba(22,48,84,0)'); fog.addColorStop(0.4, 'rgba(16,36,66,0.13)');
+      fog.addColorStop(1, 'rgba(8,18,40,0)');
+      mtX.fillStyle = fog; mtX.fillRect(0, fogY - 28, W, H * 0.18);
+      const fgOx = -mxn * 65 * W * 0.013, fgBase = H * 0.765;
+      mtX.beginPath(); mtX.moveTo(-20, H);
+      for (let x = -20; x <= W + 20; x += 2) {
+        mtX.lineTo(x, fgBase - Math.sin((x+fgOx)*.003+2.5)*50
+          - Math.sin((x+fgOx)*.0065+5.2)*25 - Math.sin((x+fgOx)*.014+1.8)*9);
+      }
+      mtX.lineTo(W + 20, H); mtX.closePath();
+      mtX.fillStyle = '#02060e'; mtX.fill();
+    };
 
-    const draw = () => {
-      t++;
+    const buildClouds = (W: number, H: number, mxn: number) => {
+      clC.width = W; clC.height = H;
+      clX.clearRect(0, 0, W, H);
+      CLOUDS.forEach(c => {
+        const cx = (c.x + mxn * 0.008 * c.dep) * W, cy = c.y * H, cw = c.sz * W;
+        c.blobs.forEach(b => {
+          const bx = cx + b.ox*cw, by = cy + b.oy*cw*.3, br = b.r*cw*.38;
+          const cg = clX.createRadialGradient(bx, by, 0, bx, by, br);
+          cg.addColorStop(0, `rgba(148,188,218,${c.op})`);
+          cg.addColorStop(1, 'rgba(148,188,218,0)');
+          clX.beginPath(); clX.arc(bx, by, br, 0, Math.PI*2);
+          clX.fillStyle = cg; clX.fill();
+        });
+      });
+    };
+
+    const buildOv = (W: number, H: number) => {
+      ovC.width = W; ovC.height = H;
+      ovX.clearRect(0, 0, W, H);
+      const gnd = ovX.createLinearGradient(0, H*.77, 0, H);
+      gnd.addColorStop(0, 'rgba(2,5,12,0)'); gnd.addColorStop(0.55, 'rgba(2,5,12,0.88)');
+      gnd.addColorStop(1, '#06101e');
+      ovX.fillStyle = gnd; ovX.fillRect(0, H*.77, W, H*.23);
+      const topV = ovX.createLinearGradient(0, 0, 0, H*.18);
+      topV.addColorStop(0, 'rgba(1,4,8,0.82)'); topV.addColorStop(1, 'rgba(1,4,8,0)');
+      ovX.fillStyle = topV; ovX.fillRect(0, 0, W, H*.18);
+      const lV = ovX.createLinearGradient(0, 0, W*.09, 0);
+      lV.addColorStop(0, 'rgba(1,4,8,0.56)'); lV.addColorStop(1, 'rgba(1,4,8,0)');
+      ovX.fillStyle = lV; ovX.fillRect(0, 0, W*.09, H);
+      const rV = ovX.createLinearGradient(W, 0, W*.91, 0);
+      rV.addColorStop(0, 'rgba(1,4,8,0.56)'); rV.addColorStop(1, 'rgba(1,4,8,0)');
+      ovX.fillStyle = rV; ovX.fillRect(W*.91, 0, W*.09, H);
+    };
+
+    // ── Resize ──────────────────────────────────────────────────────────────
+    const resize = () => {
+      canvas.width = canvas.offsetWidth; canvas.height = canvas.offsetHeight;
       const W = canvas.width, H = canvas.height;
-      if (!W || !H) { animId = requestAnimationFrame(draw); return; }
+      buildBg(W, H); buildMt(W, H, 0); buildClouds(W, H, 0); buildOv(W, H);
+      lastMxn = 0;
+    };
+    resize();
+    const ro = new ResizeObserver(resize);
+    ro.observe(canvas);
 
-      mx += (tmx - mx) * 0.038;
-      my += (tmy - my) * 0.038;
-      const mxn = (mx - 0.5) * 2; // −1 … +1
+    const onMove = (e: MouseEvent) => {
+      tmx = e.clientX / window.innerWidth;
+      lastMoveTime = performance.now();
+    };
+    window.addEventListener('mousemove', onMove);
 
+    let animId: number;
+
+    const draw = (now: number) => {
+      animId = requestAnimationFrame(draw);
+      const W = canvas.width, H = canvas.height;
+      if (!W || !H) return;
+
+      // ── Frame throttle ───────────────────────────────────────────────────
+      const isIdle = now - lastMoveTime > 1500;
+      if (now - lastDrawTs < (isIdle ? 55 : 16)) return; // ~18fps idle / 60fps active
+      const dt = lastDrawTs ? Math.min(now - lastDrawTs, 100) : 16.67;
+      lastDrawTs = now;
+      const dtF = dt / 16.67; // normalised to 60fps-equivalent units
+      t += dtF;
+
+      // ── Mouse interpolation (freeze when idle) ───────────────────────────
+      if (!isIdle) mx += (tmx - mx) * 0.038;
+      const mxn = (mx - 0.5) * 2;
+
+      // ── Advance cloud positions (time-normalised) ────────────────────────
+      CLOUDS.forEach(c => { c.x += c.spd * dtF; if (c.x > 1.18) c.x = -0.18; });
+
+      // ── Rebuild caches when needed ───────────────────────────────────────
+      if (now - lastCloudTs > 167) { buildClouds(W, H, mxn); lastCloudTs = now; } // 6fps
+      if (Math.abs(mxn - lastMxn) > 0.002) { buildMt(W, H, mxn); lastMxn = mxn; }
+
+      // ── Composite ───────────────────────────────────────────────────────
       ctx.clearRect(0, 0, W, H);
+      ctx.drawImage(bgC, 0, 0); // sky + horizon glow
 
-      // Sky gradient
-      const sky = ctx.createLinearGradient(0, 0, 0, H);
-      sky.addColorStop(0,    '#010407');
-      sky.addColorStop(0.28, '#04091a');
-      sky.addColorStop(0.58, '#0a1a32');
-      sky.addColorStop(0.8,  '#122540');
-      sky.addColorStop(1,    '#1a3250');
-      ctx.fillStyle = sky; ctx.fillRect(0, 0, W, H);
-
-      // Stars
+      // Stars (twinkling — must stay per-frame)
       STARS.forEach(s => {
         const a = s.br * (0.5 + 0.5 * Math.sin(t * s.sp + s.ph)) * Math.max(0, 1 - s.y * 1.6);
-        ctx.beginPath();
-        ctx.arc(s.x * W + mxn * 3, s.y * H, s.r, 0, Math.PI * 2);
+        ctx.beginPath(); ctx.arc(s.x * W + mxn * 3, s.y * H, s.r, 0, Math.PI * 2);
         ctx.fillStyle = `rgba(210,228,248,${a})`; ctx.fill();
       });
 
-      // Moon glow (soft, upper-right)
-      const moonX = W * 0.76 + mxn * 5, moonY = H * 0.11;
-      const mg = ctx.createRadialGradient(moonX, moonY, 0, moonX, moonY, H * 0.12);
-      mg.addColorStop(0,   'rgba(215,235,255,0.07)');
-      mg.addColorStop(0.4, 'rgba(180,210,240,0.025)');
-      mg.addColorStop(1,   'rgba(0,0,0,0)');
+      // Moon glow (moves with mouse — 1 gradient, cheap)
+      const moonX = W * 0.76 + mxn * 5;
+      const mg = ctx.createRadialGradient(moonX, H*.11, 0, moonX, H*.11, H*.12);
+      mg.addColorStop(0, 'rgba(215,235,255,0.07)'); mg.addColorStop(0.4, 'rgba(180,210,240,0.025)');
+      mg.addColorStop(1, 'rgba(0,0,0,0)');
       ctx.fillStyle = mg; ctx.fillRect(0, 0, W, H * 0.35);
 
-      // Horizon amber glow
-      const hY = H * 0.61;
-      const hg = ctx.createRadialGradient(W * 0.5, hY, 0, W * 0.5, hY, W * 0.52);
-      hg.addColorStop(0,   'rgba(212,168,67,0.088)');
-      hg.addColorStop(0.32,'rgba(185,105,28,0.038)');
-      hg.addColorStop(0.65,'rgba(110,52,8,0.012)');
-      hg.addColorStop(1,   'rgba(0,0,0,0)');
-      ctx.fillStyle = hg; ctx.fillRect(0, 0, W, H);
+      ctx.drawImage(clC, 0, 0); // clouds (6fps cache)
+      ctx.drawImage(mtC, 0, 0); // mountains + fog + hill (parallax cache)
 
-      // Clouds
-      CLOUDS.forEach(c => {
-        c.x += c.spd; if (c.x > 1.18) c.x = -0.18;
-        const cx = (c.x + mxn * 0.008 * c.dep) * W;
-        const cy = c.y * H, cw = c.sz * W;
-        c.blobs.forEach(b => {
-          const bx = cx + b.ox * cw, by = cy + b.oy * cw * 0.3, br = b.r * cw * 0.38;
-          const cg = ctx.createRadialGradient(bx, by, 0, bx, by, br);
-          cg.addColorStop(0, `rgba(148,188,218,${c.op})`);
-          cg.addColorStop(1, 'rgba(148,188,218,0)');
-          ctx.beginPath(); ctx.arc(bx, by, br, 0, Math.PI * 2);
-          ctx.fillStyle = cg; ctx.fill();
-        });
-      });
-
-      // Mountain layers (far → near)
-      LAYERS.forEach(({ yFrac, par, rgb, waves }) => {
-        const ox = -mxn * par * W * 0.013;
-        const baseY = H * yFrac;
-        const [r, g, b] = rgb;
-        ctx.beginPath(); ctx.moveTo(-20, H);
-        for (let x = -20; x <= W + 20; x += 2) ctx.lineTo(x, baseY - wave(x, waves, ox));
-        ctx.lineTo(W + 20, H); ctx.closePath();
-        ctx.fillStyle = `rgb(${r},${g},${b})`; ctx.fill();
-      });
-
-      // Atmospheric fog at mountain bases
-      const fogY = H * 0.69;
-      const fog = ctx.createLinearGradient(0, fogY - 28, 0, fogY + H * 0.09);
-      fog.addColorStop(0,   'rgba(22,48,84,0)');
-      fog.addColorStop(0.4, 'rgba(16,36,66,0.13)');
-      fog.addColorStop(1,   'rgba(8,18,40,0)');
-      ctx.fillStyle = fog; ctx.fillRect(0, fogY - 28, W, H * 0.18);
-
-      // Foreground hill
-      const fgOx = -mxn * 65 * W * 0.013;
-      const fgBase = H * 0.765;
-      ctx.beginPath(); ctx.moveTo(-20, H);
-      for (let x = -20; x <= W + 20; x += 2) {
-        ctx.lineTo(x, fgBase
-          - Math.sin((x + fgOx) * 0.003  + 2.5) * 50
-          - Math.sin((x + fgOx) * 0.0065 + 5.2) * 25
-          - Math.sin((x + fgOx) * 0.014  + 1.8) * 9);
-      }
-      ctx.lineTo(W + 20, H); ctx.closePath();
-      ctx.fillStyle = '#02060e'; ctx.fill();
-
-      // Swaying grass — two layers
-      const wind = t * 0.0054;
-      const gBase = H * 0.79;
-      const steps = Math.ceil(W / 3.5);
-
+      // Swaying grass (must stay per-frame for wind animation)
+      const wind = t * 0.0054, gBase = H * 0.79;
       ctx.beginPath(); ctx.moveTo(-5, H);
+      const steps = Math.ceil(W / 3.5);
       for (let i = 0; i <= steps; i++) {
         const x = (i / steps) * (W + 10) - 5;
-        const sw = Math.sin(x * 0.021 + wind) * 5 + Math.sin(x * 0.054 + wind * 1.4) * 2.5;
-        const th = 11 + Math.sin(x * 0.043 + 1.2) * 5;
-        ctx.lineTo(x + sw, gBase - th); ctx.lineTo(x + 3.5, gBase);
+        const sw = Math.sin(x*.021 + wind)*5 + Math.sin(x*.054 + wind*1.4)*2.5;
+        ctx.lineTo(x + sw, gBase - 11 - Math.sin(x*.043 + 1.2)*5); ctx.lineTo(x + 3.5, gBase);
       }
-      ctx.lineTo(W + 10, H); ctx.closePath();
-      ctx.fillStyle = '#020810'; ctx.fill();
-
+      ctx.lineTo(W + 10, H); ctx.closePath(); ctx.fillStyle = '#020810'; ctx.fill();
       ctx.beginPath(); ctx.moveTo(-5, H);
       const steps2 = Math.ceil(W / 6);
       for (let i = 0; i <= steps2; i++) {
         const x = (i / steps2) * (W + 10) - 5;
-        const sw = Math.sin(x * 0.017 + wind * 0.87 + 1.1) * 3.5;
-        const th = 8 + Math.sin(x * 0.037 + 2.6) * 3.5;
-        ctx.lineTo(x + sw, gBase - th + 5); ctx.lineTo(x + 6, gBase);
+        const sw = Math.sin(x*.017 + wind*.87 + 1.1)*3.5;
+        ctx.lineTo(x + sw, gBase - 3 - Math.sin(x*.037 + 2.6)*3.5); ctx.lineTo(x + 6, gBase);
       }
-      ctx.lineTo(W + 10, H); ctx.closePath();
-      ctx.fillStyle = 'rgba(4,14,34,0.55)'; ctx.fill();
-
-      // Ground fade
-      const gnd = ctx.createLinearGradient(0, H * 0.77, 0, H);
-      gnd.addColorStop(0,   'rgba(2,5,12,0)');
-      gnd.addColorStop(0.55,'rgba(2,5,12,0.88)');
-      gnd.addColorStop(1,   '#06101e');
-      ctx.fillStyle = gnd; ctx.fillRect(0, H * 0.77, W, H * 0.23);
+      ctx.lineTo(W + 10, H); ctx.closePath(); ctx.fillStyle = 'rgba(4,14,34,0.55)'; ctx.fill();
 
       // Fireflies
-      if (fps.length < 24 && t % 7 === 0) {
-        fps.push({
-          x: Math.random() * W,
-          y: H * 0.61 + Math.random() * H * 0.22,
-          vx: (Math.random() - 0.5) * 0.26,
-          vy: -(Math.random() * 0.2 + 0.08),
-          life: 0, max: 105 + Math.random() * 95,
-          r: 0.85 + Math.random() * 0.7,
-        });
+      if (fps.length < 24 && Math.random() < dtF / 7) {
+        fps.push({ x: Math.random()*W, y: H*.61 + Math.random()*H*.22,
+          vx: (Math.random()-.5)*.26, vy: -(Math.random()*.2+.08),
+          life: 0, max: 105 + Math.random()*95, r: .85 + Math.random()*.7 });
       }
       for (let i = fps.length - 1; i >= 0; i--) {
         const p = fps[i];
-        p.life++; p.x += p.vx + Math.sin(p.life * 0.046) * 0.27; p.y += p.vy;
+        p.life += dtF; p.x += (p.vx + Math.sin(p.life*.046)*.27)*dtF; p.y += p.vy*dtF;
         const ft = p.life / p.max;
-        const a = (ft < 0.15 ? ft / 0.15 : ft > 0.78 ? (1 - ft) / 0.22 : 1) * 0.5;
-        ctx.beginPath(); ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+        const a = (ft < .15 ? ft/.15 : ft > .78 ? (1-ft)/.22 : 1) * .5;
+        ctx.beginPath(); ctx.arc(p.x, p.y, p.r, 0, Math.PI*2);
         ctx.fillStyle = `rgba(212,168,67,${a})`; ctx.fill();
-        ctx.beginPath(); ctx.arc(p.x, p.y, p.r * 4.5, 0, Math.PI * 2);
-        ctx.fillStyle = `rgba(212,168,67,${a * 0.07})`; ctx.fill();
+        ctx.beginPath(); ctx.arc(p.x, p.y, p.r*4.5, 0, Math.PI*2);
+        ctx.fillStyle = `rgba(212,168,67,${a*.07})`; ctx.fill();
         if (p.life >= p.max) fps.splice(i, 1);
       }
 
       // Birds
-      if (--flockTimer <= 0 && !flock) spawnFlock(W, H);
+      flockTimer -= dtF;
+      if (flockTimer <= 0 && !flock) spawnFlock(W, H);
       if (flock) {
-        flock.x += flock.vx; flock.life++;
+        flock.x += flock.vx*dtF; flock.life += dtF;
         const ft = flock.life / flock.max;
-        const fa = (ft < 0.05 ? ft / 0.05 : ft > 0.92 ? (1 - ft) / 0.08 : 1) * 0.26;
+        const fa = (ft < .05 ? ft/.05 : ft > .92 ? (1-ft)/.08 : 1) * .26;
         flock.birds.forEach(b => {
-          b.wt += 0.031;
-          const bx = flock!.x + b.ox;
-          const by = flock!.y + b.oy + Math.sin(flock!.life * 0.011) * 3.5;
-          const flap = Math.sin(b.wt) * 0.23 * flock!.sz;
-          ctx.save();
-          ctx.globalAlpha = fa; ctx.strokeStyle = '#9ab4c6';
-          ctx.lineWidth = 1.05; ctx.lineCap = 'round';
-          ctx.beginPath();
-          ctx.moveTo(bx - flock!.sz, by + flap);
+          b.wt += .031*dtF;
+          const bx = flock!.x + b.ox, by = flock!.y + b.oy + Math.sin(flock!.life*.011)*3.5;
+          ctx.save(); ctx.globalAlpha = fa; ctx.strokeStyle = '#9ab4c6';
+          ctx.lineWidth = 1.05; ctx.lineCap = 'round'; ctx.beginPath();
+          ctx.moveTo(bx - flock!.sz, by + Math.sin(b.wt)*.23*flock!.sz);
           ctx.lineTo(bx, by);
-          ctx.lineTo(bx + flock!.sz, by + flap);
+          ctx.lineTo(bx + flock!.sz, by + Math.sin(b.wt)*.23*flock!.sz);
           ctx.stroke(); ctx.restore();
         });
         if (flock.life >= flock.max) flock = null;
       }
 
-      // Edge vignettes
-      [[0, 0, W, H * 0.2, 0, H * 0.2, 0.78, 0, true],
-       [0, 0, W * 0.1, 0, W * 0.1, 0, 0.52, false, true],
-       [W, 0, W * 0.9, 0, W * 0.9, 0, 0.52, false, true]].forEach(([x0, y0, x1, y1, x2, y2, alpha, isVert]) => {
-        const vg = isVert !== false
-          ? ctx.createLinearGradient(x0 as number, y0 as number, x1 as number, y1 as number)
-          : ctx.createLinearGradient(x0 as number, 0, x1 as number, 0);
-        vg.addColorStop(0, `rgba(1,4,8,${alpha})`);
-        vg.addColorStop(1, 'rgba(1,4,8,0)');
-        ctx.fillStyle = vg;
-        if (x2 !== 0 || y2 !== 0) {
-          ctx.fillRect(0, 0, W, H * 0.2);
-        } else if ((x1 as number) < W * 0.5) {
-          ctx.fillRect(0, 0, W * 0.1, H);
-        } else {
-          ctx.fillRect(W * 0.9, 0, W * 0.1, H);
-        }
-      });
-
-      // Clean top vignette
-      const topV = ctx.createLinearGradient(0, 0, 0, H * 0.18);
-      topV.addColorStop(0, 'rgba(1,4,8,0.82)');
-      topV.addColorStop(1, 'rgba(1,4,8,0)');
-      ctx.fillStyle = topV; ctx.fillRect(0, 0, W, H * 0.18);
-      const lV = ctx.createLinearGradient(0, 0, W * 0.09, 0);
-      lV.addColorStop(0, 'rgba(1,4,8,0.56)'); lV.addColorStop(1, 'rgba(1,4,8,0)');
-      ctx.fillStyle = lV; ctx.fillRect(0, 0, W * 0.09, H);
-      const rV = ctx.createLinearGradient(W, 0, W * 0.91, 0);
-      rV.addColorStop(0, 'rgba(1,4,8,0.56)'); rV.addColorStop(1, 'rgba(1,4,8,0)');
-      ctx.fillStyle = rV; ctx.fillRect(W * 0.91, 0, W * 0.09, H);
-
-      animId = requestAnimationFrame(draw);
+      ctx.drawImage(ovC, 0, 0); // ground fade + vignettes
     };
-    draw();
 
-    return () => {
-      cancelAnimationFrame(animId);
-      ro.disconnect();
-    };
+    animId = requestAnimationFrame(draw);
+    return () => { cancelAnimationFrame(animId); ro.disconnect(); window.removeEventListener('mousemove', onMove); };
   }, []);
 
   return (
-    <canvas
-      ref={ref}
-      style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', display: 'block' }}
-    />
+    <canvas ref={ref} style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', display: 'block' }} />
   );
 }
 
