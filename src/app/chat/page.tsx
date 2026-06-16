@@ -1,11 +1,20 @@
 'use client';
 import { useChat } from '@ai-sdk/react';
+import { useState } from 'react';
 import Link from 'next/link';
 
 export default function ChatPage() {
-  const { messages, input, handleInputChange, handleSubmit, isLoading } = useChat({
-    api: '/api/chat',
-  });
+  const { messages, sendMessage, status } = useChat();
+  const [input, setInput] = useState('');
+  const isLoading = status === 'submitted' || status === 'streaming';
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    const text = input.trim();
+    if (!text || isLoading) return;
+    sendMessage({ text });
+    setInput('');
+  };
 
   return (
     <div className="min-h-screen bg-cream flex flex-col items-center p-4 font-sans">
@@ -16,13 +25,19 @@ export default function ChatPage() {
         </div>
 
         <div className="flex-1 overflow-y-auto p-6 space-y-6">
-          {messages.map(m => (
-            <div key={m.id} className={`flex ${m.role === 'user' ? 'justify-end' : 'justify-start'}`}>
-              <div className={`max-w-[80%] p-3 text-sm ${m.role === 'user' ? 'bg-mocha text-cream' : 'bg-[#E8CFA0] text-espresso'}`}>
-                {m.content}
+          {messages.map(m => {
+            const text = m.parts
+              .filter((p): p is { type: 'text'; text: string } => p.type === 'text')
+              .map(p => p.text)
+              .join('');
+            return (
+              <div key={m.id} className={`flex ${m.role === 'user' ? 'justify-end' : 'justify-start'}`}>
+                <div className={`max-w-[80%] p-3 text-sm ${m.role === 'user' ? 'bg-mocha text-cream' : 'bg-[#E8CFA0] text-espresso'}`}>
+                  {text}
+                </div>
               </div>
-            </div>
-          ))}
+            );
+          })}
         </div>
 
         <div className="p-4 border-t border-caramel bg-cream">
@@ -30,7 +45,7 @@ export default function ChatPage() {
             <input
               className="flex-1 p-2 text-espresso bg-parchment border border-caramel focus:outline-none focus:border-mocha placeholder:text-walnut"
               value={input}
-              onChange={handleInputChange}
+              onChange={e => setInput(e.target.value)}
               placeholder="Ask me something..."
             />
             <button type="submit" disabled={isLoading} className="px-4 py-2 bg-mocha text-cream hover:bg-espresso transition-colors">
