@@ -1,0 +1,170 @@
+[
+  {
+    "id": "1",
+    "city": "Paris",
+    "coordinates": [48.8566, 2.3522],
+    "photo": "/Paris.JPG",
+    "info": "February 2026. A solo winter trip. Visited the Louvre and walked along the Seine."
+  },
+  {
+    "id": "2",
+    "city": "Tokyo",
+    "coordinates": [35.6762, 139.6503],
+    "photo": "/Tokyo.JPG",
+    "info": "Spring 2025. Academic exchange at Aoyama Gakuin University."
+  },
+  {
+    "id": "3",
+    "city": "Singapore",
+    "coordinates": [1.3521, 103.8198],
+    "photo": "/Singapore.JPG",
+    "info": "2025.02 Traveled to Singapore with my dad."
+  },
+    {
+    "id": "4",
+    "city": "Chongqing",
+    "coordinates": [29.5630, 106.5700],
+    "photo": "/Chongqing.JPG",
+    "info": "2025.03 Eating hell spicy level hotpot with my dad."
+  },
+    {
+    "id": "5",
+    "city": "SoshigayaOkura",
+    "coordinates": [35.6586, 139.7014],
+    "photo": "/SoshigayaOkura.JPG",
+    "info": "2025.04 sakura blossom near my dorm in Soshigaya-Okura."
+  },
+    {
+    "id": "6",
+    "city": "Sapporo",
+    "coordinates": [43.0618, 141.3545],
+    "photo": "/Sapporo.JPG",
+    "info": "2025.05 Solo trip to Sapporo."
+  },
+    {
+    "id": "7",
+    "city": "Shizuoka",
+    "coordinates": [34.9769, 138.3831],
+    "photo": "/Shizuoka.JPG",
+    "info": "2025.05 Solo trip to Shizuoka(for chibi maruko-chan)."
+  },
+    {
+    "id": "8",
+    "city": "Wakayama",
+    "coordinates": [34.23314463124967, 135.19335246871992],
+    "photo": "/Wakayama.JPG",
+    "info": "2025.06 Solo trip to Wakayama,took the cat theme train."
+  },
+    {
+    "id": "9",
+    "city": "Osaka",
+    "coordinates": [34.6937, 135.5023],
+    "photo": "/Osaka.JPG",
+    "info": "2025.06 Solo trip to Osaka, tried to enter the world expo but tickets are sold out,also didn't visit universal studio \n\n which is sad."
+  },
+    {
+    "id": "10",
+    "city": "Nara",
+    "coordinates": [34.6851, 135.8048],
+    "photo": "/Nara.JPG",
+    "info": "2025.06 Solo trip to Nara, visited Todai-ji and Nara Park. fed a lot of deer."
+  },
+    {
+    "id": "11",
+    "city": "Okinawa",
+    "coordinates": [26.178649795885466, 127.38135968568639],
+    "photo": "/Okinawa.JPG",
+    "info": "2025.06 Solo trip to Okinawa, went to scuba diving with bunch of strangers."
+  },
+    {
+    "id": "12",
+    "city": "Hakone",
+    "coordinates": [35.2328, 139.1045],
+    "photo": "/Hakone.JPG",
+    "info": "2025.06 friends trip to Hakone, hot spring and delic fish"
+  },
+    {
+    "id": "13",
+    "city": "Mt. Fuji",
+    "coordinates": [35.3606, 138.7274],
+    "photo": "/Mt.Fuji.JPG",
+    "info": "2025.05 climbing Mt. Fuji with tour, met some great people and almost died."
+  },
+    {
+    "id": "14",
+    "city": "Versailles",
+    "coordinates": [48.8049, 2.1204],
+    "photo": "/Versaile.JPG",
+    "info": "2026.02 Solo trip to Versailles and walked around the palace garden, took 2h and was exhausted."
+  },
+    {
+    "id": "15",
+    "city": "Henan",
+    "coordinates": [33.8825, 113.6144],
+    "photo": "/Henan.JPG",
+    "info": "2025.02 Visited friend who lived there."
+  },
+    {
+    "id": "16",
+    "city": "Nanning",
+    "coordinates": [22.8176, 108.3669],
+    "photo": "/Nanning.JPG",
+    "info": "2025.01 Family trip but they left me behind (I asked them to) so I explored the city alone."
+  },
+    {
+    "id": "17",
+    "city": "Iceland",
+    "coordinates": [64.9631, -19.0208],
+    "photo": "/Iceland.JPG",
+    "info": "2024.08 Solo trip to Iceland. Yes I went there during summer but it was still cold."
+  },
+    {
+    "id": "18",
+    "city": "Reykjanes Peninsula",
+    "coordinates": [63.808989162572935, -22.69264198524909],
+    "photo": "/Iceland_volcano.JPG",
+    "info": "2024.08 volcano."
+  },
+    {
+    "id": "19",
+    "city": "Lisbon",
+    "coordinates": [38.7223, -9.1393],
+    "photo": "/Lisbon.JPG",
+    "info": "2026.05 Travel to Lisbon with mom."
+  },
+    {
+    "id": "20",
+    "city": "Porto",
+    "coordinates": [41.14961, -8.61099],
+    "photo": "/Porto.JPG",
+    "info": "2026.05 Travel to Porto with mom."
+  },
+    {
+    "id": "21",
+    "city": "Seville",
+    "coordinates": [37.3886, -5.9823],
+    "photo": "/Seville.JPG",
+    "info": "2026.05 Travel to Seville with mom."
+  },
+      {
+    "id": "22",
+    "city": "Beihai",
+    "coordinates": [21.4822, 109.3145],
+    "photo": "/Beihai.JPG",
+    "info": "2025.03 Traveled to Beihai with fam."
+  },
+    {
+    "id": "23",
+    "city": "Puerto Maldonado",
+    "coordinates": [-12.5933, -69.1895],
+    "photo": "/Puerto Madonado.JPG",
+    "info": "2024.05 Traveled to Puerto Maldonado and stayed in jungle lodge with friend."
+  },
+    {
+    "id": "24",
+    "city": "Macchu Picchu",
+    "coordinates": [-13.162989848287275, -72.54530501953803],
+    "photo": "/Macchupichu.JPG",
+    "info": "2024.05 Traveled to Macchu Picchu with friend."
+  }
+]
