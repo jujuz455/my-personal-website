@@ -3,7 +3,7 @@
     "id": "1",
     "city": "Paris",
     "coordinates": [48.8566, 2.3522],
-    "photo": "/Paris.JPG",
+    "photo": "/Paris.jpg",
     "info": "February 2026. A solo winter trip. Visited the Louvre and walked along the Seine."
   },
   {
@@ -24,7 +24,7 @@
     "id": "4",
     "city": "Chongqing",
     "coordinates": [29.5630, 106.5700],
-    "photo": "/Chongqing.JPG",
+    "photo": "/Chongqing.jpg",
     "info": "2025.03 Eating hell spicy level hotpot with my dad."
   },
     {
@@ -87,14 +87,14 @@
     "id": "13",
     "city": "Mt. Fuji",
     "coordinates": [35.3606, 138.7274],
-    "photo": "/Mt.Fuji.JPG",
+    "photo": "/Mt.Fuji.jpg",
     "info": "2025.05 climbing Mt. Fuji with tour, met some great people and almost died."
   },
     {
     "id": "14",
     "city": "Versailles",
     "coordinates": [48.8049, 2.1204],
-    "photo": "/Versaile.JPG",
+    "photo": "/Versaile.jpg",
     "info": "2026.02 Solo trip to Versailles and walked around the palace garden, took 2h and was exhausted."
   },
     {
@@ -108,7 +108,7 @@
     "id": "16",
     "city": "Nanning",
     "coordinates": [22.8176, 108.3669],
-    "photo": "/Nanning.JPG",
+    "photo": "/Nanning.jpg",
     "info": "2025.01 Family trip but they left me behind (I asked them to) so I explored the city alone."
   },
     {
@@ -150,21 +150,21 @@
     "id": "22",
     "city": "Beihai",
     "coordinates": [21.4822, 109.3145],
-    "photo": "/Beihai.JPG",
+    "photo": "/Beihai.jpg",
     "info": "2025.03 Traveled to Beihai with fam."
   },
     {
     "id": "23",
     "city": "Puerto Maldonado",
     "coordinates": [-12.5933, -69.1895],
-    "photo": "/Puerto Madonado.JPG",
+    "photo": "/Puerto%20Madonado.JPG",
     "info": "2024.05 Traveled to Puerto Maldonado and stayed in jungle lodge with friend."
   },
     {
     "id": "24",
     "city": "Macchu Picchu",
     "coordinates": [-13.162989848287275, -72.54530501953803],
-    "photo": "/Macchupichu.JPG",
+    "photo": "/Macchupichu.jpg",
     "info": "2024.05 Traveled to Macchu Picchu with friend."
   }
 ]

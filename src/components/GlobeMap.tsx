@@ -116,6 +116,11 @@ function InfoCard({ place, onClose }: { place: Place; onClose: () => void }) {
           src={place.photo ?? `https://staticmap.openstreetmap.de/staticmap.php?center=${place.lat},${place.lng}&zoom=14&size=320x180&markers=${place.lat},${place.lng},red`}
           alt={place.name}
           style={{ width: '100%', height: '260px', objectFit: 'contain', display: 'block', background: '#1a1209' }}
+          onError={(e) => {
+            const img = e.currentTarget;
+            img.onerror = null;
+            img.src = `https://staticmap.openstreetmap.de/staticmap.php?center=${place.lat},${place.lng}&zoom=14&size=320x180&markers=${place.lat},${place.lng},red`;
+          }}
         />
         <button onClick={onClose} style={{
           position: 'absolute', top: '0.5rem', right: '0.5rem',
