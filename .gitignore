@@ -33,6 +33,9 @@ yarn-error.log*
 # env files (can opt-in for committing if needed)
 .env*
 
+# persona raw interview notes (private, local only)
+/persona/
+
 # vercel
 .vercel
 
