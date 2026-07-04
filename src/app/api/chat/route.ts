@@ -1,11 +1,14 @@
 import { google } from '@ai-sdk/google';
-import { streamText } from 'ai';
+import { streamText, convertToModelMessages, type UIMessage } from 'ai';
+import { PERSONA_SYSTEM_PROMPT } from '@/lib/persona';
 
 export async function POST(req: Request) {
-  const { messages } = await req.json();
-  const result = await streamText({
-    model: google('gemini-2.0-flash'), // 使用目前最新的稳定闪电模型
-    messages,
+  const { messages }: { messages: UIMessage[] } = await req.json();
+  const result = streamText({
+    model: google('gemini-2.5-flash'),
+    system: PERSONA_SYSTEM_PROMPT,
+    messages: await convertToModelMessages(messages),
+    temperature: 0.9,
   });
-  return result.toTextStreamResponse();
+  return result.toUIMessageStreamResponse();
 }

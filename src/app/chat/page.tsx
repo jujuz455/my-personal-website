@@ -20,7 +20,7 @@ export default function ChatPage() {
     <div className="min-h-screen bg-cream flex flex-col items-center p-4 font-sans">
       <div className="w-full max-w-2xl flex flex-col h-[90vh] bg-parchment border border-caramel shadow-sm mt-8">
         <div className="p-4 border-b border-caramel flex justify-between items-center bg-cream">
-          <h2 className="font-semibold text-espresso">Me-Bot</h2>
+          <h2 className="font-semibold text-espresso">伪人润辰 · Talk to Me</h2>
           <Link href="/" className="text-sm text-walnut hover:text-espresso">← Back to Home</Link>
         </div>
 
