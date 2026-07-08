@@ -326,6 +326,40 @@ export default function About() {
           </div>
         </div>
 
+        <EntryRule />
+
+        {/* ─ Entry 006 ─ */}
+        <div style={{
+          display: 'grid', gridTemplateColumns: '36% 1fr', gap: '7vw',
+          opacity: entries ? 1 : 0,
+          transform: entries ? 'translateY(0)' : 'translateY(22px)',
+          transition: 'opacity 0.9s ease 0.7s, transform 0.9s ease 0.7s',
+        }}>
+          <div style={{ paddingTop: '0.2rem' }}>
+            <p style={{ fontFamily: 'var(--font-geist-mono)', fontSize: '9px', letterSpacing: '0.22em', color: 'rgba(212,168,67,0.32)', margin: '0 0 0.7rem' }}>
+              [ ENTRY 006 ]
+            </p>
+            <p style={{ fontSize: '10px', color: 'rgba(200,214,224,0.3)', margin: '0 0 0.25rem', letterSpacing: '0.08em' }}>The pool</p>
+            <p style={{ fontSize: '10px', color: 'rgba(200,214,224,0.2)', margin: 0, letterSpacing: '0.08em' }}>whenever I'm swimming</p>
+          </div>
+          <div>
+            <p style={{ fontSize: '10px', letterSpacing: '0.2em', textTransform: 'uppercase', color: 'rgba(212,168,67,0.4)', margin: '0 0 1.2rem' }}>
+              On what fills the pool
+            </p>
+            <p style={{ fontSize: '15px', lineHeight: 2.05, color: '#A8BCC8', margin: 0 }}>
+              The thing that submerges me when I swim isn't{' '}
+              <Ann note="well — technically it is. but only technically.">water</Ann>
+              . It's thoughts, tons of them by weight. Every stroke stirs one loose,
+              and every stir carries a small thrill — like{' '}
+              <Ann note="some of them have been sealed for years. still good.">excavating an idea</Ann>
+              {' '}I'd buried long ago and finding it still moves. I just keep swimming
+              through all of it, and somewhere along the way I completely forget that
+              what I'm doing is, mechanically speaking,{' '}
+              <Ann note="my body does the laps. I'm elsewhere.">exercise</Ann>.
+            </p>
+          </div>
+        </div>
+
       </section>
 
       {/* ── CONTACT ──────────────────────────────────────────────── */}
