@@ -36,6 +36,9 @@ yarn-error.log*
 # persona raw interview notes (private, local only)
 /persona/
 
+# claude code worktrees / local session files
+/.claude/
+
 # vercel
 .vercel
 
