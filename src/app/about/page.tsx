@@ -360,6 +360,42 @@ export default function About() {
           </div>
         </div>
 
+        <EntryRule />
+
+        {/* ─ Entry 007 ─ */}
+        <div style={{
+          display: 'grid', gridTemplateColumns: '36% 1fr', gap: '7vw',
+          opacity: entries ? 1 : 0,
+          transform: entries ? 'translateY(0)' : 'translateY(22px)',
+          transition: 'opacity 0.9s ease 0.85s, transform 0.9s ease 0.85s',
+        }}>
+          <div style={{ paddingTop: '0.2rem' }}>
+            <p style={{ fontFamily: 'var(--font-geist-mono)', fontSize: '9px', letterSpacing: '0.22em', color: 'rgba(212,168,67,0.32)', margin: '0 0 0.7rem' }}>
+              [ ENTRY 007 ]
+            </p>
+            <p style={{ fontSize: '10px', color: 'rgba(200,214,224,0.3)', margin: '0 0 0.25rem', letterSpacing: '0.08em' }}>Everywhere</p>
+            <p style={{ fontSize: '10px', color: 'rgba(200,214,224,0.2)', margin: 0, letterSpacing: '0.08em' }}>∞</p>
+          </div>
+          <div>
+            <p style={{ fontSize: '10px', letterSpacing: '0.2em', textTransform: 'uppercase', color: 'rgba(212,168,67,0.4)', margin: '0 0 1.2rem' }}>
+              On friendship by telepathy
+            </p>
+            <p style={{ fontSize: '15px', lineHeight: 2.05, color: '#A8BCC8', margin: 0 }}>
+              I've made plenty of friends by now, and the ones I keep are the ones with
+              minds of their own. Some people, after we've hung out long enough, simply
+              start becoming{' '}
+              <Ann note="flattering for about a week. unsettling after.">me</Ann>
+              {' '}— my phrasings, my takes — and I don't love having my thoughts stolen.
+              Though honestly, what is being alive if not{' '}
+              <Ann note="including this one">repeating sentences someone else said first</Ann>
+              ? But people with genuinely strong opinions are different. Those friendships
+              run on{' '}
+              <Ann note="no messages. no upkeep. the connection just holds.">telepathy</Ann>
+              {' '}— years can pass, and neither of us forgets the other.
+            </p>
+          </div>
+        </div>
+
       </section>
 
       {/* ── CONTACT ──────────────────────────────────────────────── */}
