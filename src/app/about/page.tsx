@@ -262,11 +262,47 @@ export default function About() {
           display: 'grid', gridTemplateColumns: '36% 1fr', gap: '7vw',
           opacity: entries ? 1 : 0,
           transform: entries ? 'translateY(0)' : 'translateY(22px)',
-          transition: 'opacity 0.9s ease 0.55s, transform 0.9s ease 0.55s',
+          transition: 'opacity 0.9s ease 0.5s, transform 0.9s ease 0.5s',
         }}>
           <div style={{ paddingTop: '0.2rem' }}>
             <p style={{ fontFamily: 'var(--font-geist-mono)', fontSize: '9px', letterSpacing: '0.22em', color: 'rgba(212,168,67,0.32)', margin: '0 0 0.7rem' }}>
               [ ENTRY 004 ]
+            </p>
+            <p style={{ fontSize: '10px', color: 'rgba(200,214,224,0.3)', margin: '0 0 0.25rem', letterSpacing: '0.08em' }}>Ottawa, Canada</p>
+            <p style={{ fontSize: '10px', color: 'rgba(200,214,224,0.2)', margin: 0, letterSpacing: '0.08em' }}>2026</p>
+          </div>
+          <div>
+            <p style={{ fontSize: '10px', letterSpacing: '0.2em', textTransform: 'uppercase', color: 'rgba(212,168,67,0.4)', margin: '0 0 1.2rem' }}>
+              On playing God, selectively
+            </p>
+            <p style={{ fontSize: '15px', lineHeight: 2.05, color: '#A8BCC8', margin: 0 }}>
+              I used to run everything through other people's heads first — every choice
+              filtered through how everyone else might read it. At some point I realized
+              I only need to be clear on my own thoughts.{' '}
+              <Ann note="the position was filled long ago, and not by me">I'm not God</Ann>
+              . So with people, I've gone direct: say the thing, mean the thing.
+              That dueling-minds mode — holding every perspective at once, judging the
+              world from a{' '}
+              <Ann note="strictly recreational. kind of a rush, honestly.">god's-eye view</Ann>
+              {' '}— I save it for when I'm creating. Which raises a question I haven't
+              decided how to feel about: does that mean I'd make a good{' '}
+              <Ann note="product manager — asking for a friend">PM</Ann>?
+            </p>
+          </div>
+        </div>
+
+        <EntryRule />
+
+        {/* ─ Entry 005 ─ */}
+        <div style={{
+          display: 'grid', gridTemplateColumns: '36% 1fr', gap: '7vw',
+          opacity: entries ? 1 : 0,
+          transform: entries ? 'translateY(0)' : 'translateY(22px)',
+          transition: 'opacity 0.9s ease 0.55s, transform 0.9s ease 0.55s',
+        }}>
+          <div style={{ paddingTop: '0.2rem' }}>
+            <p style={{ fontFamily: 'var(--font-geist-mono)', fontSize: '9px', letterSpacing: '0.22em', color: 'rgba(212,168,67,0.32)', margin: '0 0 0.7rem' }}>
+              [ ENTRY 005 ]
             </p>
             <p style={{ fontSize: '10px', color: 'rgba(200,214,224,0.3)', margin: '0 0 0.25rem', letterSpacing: '0.08em' }}>Beijing, China</p>
             <p style={{ fontSize: '10px', color: 'rgba(200,214,224,0.2)', margin: 0, letterSpacing: '0.08em' }}>2025</p>
