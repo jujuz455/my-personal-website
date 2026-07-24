@@ -518,8 +518,8 @@ export default function ChatPage() {
       {/* status popup — floats in the gap between the model and the chat panel */}
       <div className="alt-aside" style={{
         position: 'fixed',
-        left: 'calc((100vw - 820px) / 4 + 145px)',
-        top: '40%',
+        left: 'calc((100vw - 820px) / 110 + 59px)',
+        top: '88%',
         transform: `translateY(-50%) ${popup ? 'translateY(0)' : 'translateY(6px)'}`,
         flexDirection: 'column',
         zIndex: 3,
