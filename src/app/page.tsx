@@ -326,7 +326,7 @@ function HRule({ show, delay = 0 }: { show: boolean; delay?: number }) {
 const CARDS = [
   { href: '/map',   icon: '◈', label: 'The Atlas',   desc: ['Places I\'ve been to.'],    active: true  },
   { href: '/about', icon: '◉', label: 'Field Notes', desc: ['Who I am.'],       active: true  },
-  { href: '/chat',  icon: '✦', label: 'Talk to Me',  desc: ['An AI version of me.','Coming soon♾️.'],         active: true  },
+  { href: '/chat',  icon: '✦', label: 'Talk to Me',  desc: ['An AI version of me.'],         active: true  },
   { href: '#',      icon: '⚙', label: 'Projects',    desc: ['Things I\'ve built.', 'Coming soon♾️.'],          active: false },
 ];
 

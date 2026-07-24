@@ -396,6 +396,118 @@ export default function About() {
           </div>
         </div>
 
+        <EntryRule />
+
+        {/* ─ Entry 008 ─ */}
+        <div style={{
+          display: 'grid', gridTemplateColumns: '36% 1fr', gap: '7vw',
+          opacity: entries ? 1 : 0,
+          transform: entries ? 'translateY(0)' : 'translateY(22px)',
+          transition: 'opacity 0.9s ease 1s, transform 0.9s ease 1s',
+        }}>
+          <div style={{ paddingTop: '0.2rem' }}>
+            <p style={{ fontFamily: 'var(--font-geist-mono)', fontSize: '9px', letterSpacing: '0.22em', color: 'rgba(212,168,67,0.32)', margin: '0 0 0.7rem' }}>
+              [ ENTRY 008 ]
+            </p>
+            <p style={{ fontSize: '10px', color: 'rgba(200,214,224,0.3)', margin: '0 0 0.25rem', letterSpacing: '0.08em' }}>Ottawa, Canada</p>
+            <p style={{ fontSize: '10px', color: 'rgba(200,214,224,0.2)', margin: 0, letterSpacing: '0.08em' }}>2026</p>
+          </div>
+          <div>
+            <p style={{ fontSize: '10px', letterSpacing: '0.2em', textTransform: 'uppercase', color: 'rgba(212,168,67,0.4)', margin: '0 0 1.2rem' }}>
+              On language, thought, and action
+            </p>
+            <p style={{ fontSize: '15px', lineHeight: 2.05, color: '#A8BCC8', margin: 0 }}>
+              Language, thought, and action are three entirely different forms of
+              expression — each one reaches places{' '}
+              <Ann note="try describing a feeling precisely. now try acting on it precisely.">the other two can't</Ann>
+              . Words never quite capture every idea I generate, and what I do never
+              quite matches what I think. So getting AI to do exactly what's in my
+              head down to the details is{' '}
+              <Ann note="prompting is translation, and translation always loses something">genuinely hard</Ann>
+              . But flip that around: AI is only a{' '}
+              <Ann note="a flat rendering of something that lives in more dimensions">visualizer</Ann>
+              {' '}of my thoughts, and what I feel is layered, spatial, multi-dimensional.
+              Which means it still has{' '}
+              <Ann note="a limitation, read optimistically">so many directions left to grow</Ann>.
+            </p>
+          </div>
+        </div>
+
+        <EntryRule />
+
+        {/* ─ Entry 009 ─ */}
+        <div style={{
+          display: 'grid', gridTemplateColumns: '36% 1fr', gap: '7vw',
+          opacity: entries ? 1 : 0,
+          transform: entries ? 'translateY(0)' : 'translateY(22px)',
+          transition: 'opacity 0.9s ease 1.15s, transform 0.9s ease 1.15s',
+        }}>
+          <div style={{ paddingTop: '0.2rem' }}>
+            <p style={{ fontFamily: 'var(--font-geist-mono)', fontSize: '9px', letterSpacing: '0.22em', color: 'rgba(212,168,67,0.32)', margin: '0 0 0.7rem' }}>
+              [ ENTRY 009 ]
+            </p>
+            <p style={{ fontSize: '10px', color: 'rgba(200,214,224,0.3)', margin: '0 0 0.25rem', letterSpacing: '0.08em' }}>Hyrule</p>
+            <p style={{ fontSize: '10px', color: 'rgba(200,214,224,0.2)', margin: 0, letterSpacing: '0.08em' }}>Hyrule time</p>
+          </div>
+          <div>
+            <p style={{ fontSize: '10px', letterSpacing: '0.2em', textTransform: 'uppercase', color: 'rgba(212,168,67,0.4)', margin: '0 0 1.2rem' }}>
+              On Saria&apos;s Song
+            </p>
+            <p style={{ fontSize: '15px', lineHeight: 2.05, color: '#A8BCC8', margin: 0 }}>
+              <Ann note="Ocarina of Time — the Lost Woods theme">Saria&apos;s Song</Ann>
+              {' '}is a fast, bright little tune, and yet every time I listen to it
+              I feel an inexplicable sadness. From a composer&apos;s angle, the{' '}
+              <Ann note="the raised fourth — the one note that refuses to settle">Lydian mode</Ann>
+              {' '}and those rising phrase-endings leave everything hanging mid-air,
+              like a thing you never know when or whether will resolve. From a{' '}
+              <Ann note="the gentle ache of watching things pass">mono no aware</Ann>
+              {' '}angle, that racing tempo is the good times slipping away at full
+              speed: the harder you try to hold on, the faster they run.
+              
+            </p>
+          </div>
+        </div>
+
+        <EntryRule />
+
+        {/* ─ Entry 010 ─ */}
+        <div style={{
+          display: 'grid', gridTemplateColumns: '36% 1fr', gap: '7vw',
+          opacity: entries ? 1 : 0,
+          transform: entries ? 'translateY(0)' : 'translateY(22px)',
+          transition: 'opacity 0.9s ease 1.3s, transform 0.9s ease 1.3s',
+        }}>
+          <div style={{ paddingTop: '0.2rem' }}>
+            <p style={{ fontFamily: 'var(--font-geist-mono)', fontSize: '9px', letterSpacing: '0.22em', color: 'rgba(212,168,67,0.32)', margin: '0 0 0.7rem' }}>
+              [ ENTRY 010 ]
+            </p>
+            <p style={{ fontSize: '10px', color: 'rgba(200,214,224,0.3)', margin: '0 0 0.25rem', letterSpacing: '0.08em' }}>Earth</p>
+            <p style={{ fontSize: '10px', color: 'rgba(200,214,224,0.2)', margin: 0, letterSpacing: '0.08em' }}>at arm&apos;s length</p>
+          </div>
+          <div>
+            <p style={{ fontSize: '10px', letterSpacing: '0.2em', textTransform: 'uppercase', color: 'rgba(212,168,67,0.4)', margin: '0 0 1.2rem' }}>
+              On the aesthetics of restraint
+            </p>
+            <p style={{ fontSize: '15px', lineHeight: 2.05, color: '#A8BCC8', margin: 0 }}>
+              I think every relationship needs a certain amount of{' '}
+              <Ann note="留白 — the blank space is part of the composition">space</Ann>
+              . Distance produces a hazy, soft-focus kind of beauty, the kind
+              you only get when you can&apos;t quite make out the details. Step
+              too close, see too clearly, and the{' '}
+              <Ann note="every relationship runs on one. no exceptions.">filter</Ann>
+              {' '}breaks. So I hold things{' '}
+              <Ann note="克制 — restraint as a form of care, not coldness">a little apart</Ann>
+              {' '}on purpose. Not because I care less, because the blur is
+              where the beauty lives. Being human myself, I know exactly which
+              parts of us don&apos;t survive close inspection, and since the
+              others are human too{' '}
+              <Ann note="Alien possibility acknowledged. idk.">(probably)</Ann>
+              , theirs can&apos;t be far off. So please {' '}
+              let my fantasy linger a little longer.
+            </p>
+          </div>
+        </div>
+
       </section>
 
       {/* ── CONTACT ──────────────────────────────────────────────── */}
