@@ -508,6 +508,41 @@ export default function About() {
           </div>
         </div>
 
+        <EntryRule />
+
+        {/* ─ Entry 011 ─ */}
+        <div style={{
+          display: 'grid', gridTemplateColumns: '36% 1fr', gap: '7vw',
+          opacity: entries ? 1 : 0,
+          transform: entries ? 'translateY(0)' : 'translateY(22px)',
+          transition: 'opacity 0.9s ease 1.45s, transform 0.9s ease 1.45s',
+        }}>
+          <div style={{ paddingTop: '0.2rem' }}>
+            <p style={{ fontFamily: 'var(--font-geist-mono)', fontSize: '9px', letterSpacing: '0.22em', color: 'rgba(212,168,67,0.32)', margin: '0 0 0.7rem' }}>
+              [ ENTRY 011 ]
+            </p>
+            <p style={{ fontSize: '10px', color: 'rgba(200,214,224,0.3)', margin: '0 0 0.25rem', letterSpacing: '0.08em' }}>Somewhere in between</p>
+            <p style={{ fontSize: '10px', color: 'rgba(200,214,224,0.2)', margin: 0, letterSpacing: '0.08em' }}>ongoing</p>
+          </div>
+          <div>
+            <p style={{ fontSize: '10px', letterSpacing: '0.2em', textTransform: 'uppercase', color: 'rgba(212,168,67,0.4)', margin: '0 0 1.2rem' }}>
+              On beauty without gender
+            </p>
+            <p style={{ fontSize: '15px', lineHeight: 2.05, color: '#A8BCC8', margin: 0 }}>
+              The beauty I find most compelling steps outside the definitions of male and female{' '}
+              . It&apos;s usually{' '}
+              <Ann note="not neither. both, at once, unresolved">genderless</Ann>
+              {' '}— blurred, boundary-crossing, a kind of{' '}
+              <Ann note="not erased. balanced until the charge cancels out">neutralized</Ann>
+              {' '}state. Once something declares which side of the line it&apos;s
+              on, some of the mystery leaves with it. It&apos;s a state that&apos;s
+              never been{' '}
+              <Ann note="规训 — shaped, corrected, made to fit a mold">disciplined</Ann>
+              {' '}into shape.
+            </p>
+          </div>
+        </div>
+
       </section>
 
       {/* ── CONTACT ──────────────────────────────────────────────── */}
