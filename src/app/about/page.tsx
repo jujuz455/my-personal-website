@@ -543,6 +543,70 @@ export default function About() {
           </div>
         </div>
 
+        <EntryRule />
+
+        {/* ─ Entry 012 ─ */}
+        <div style={{
+          display: 'grid', gridTemplateColumns: '36% 1fr', gap: '7vw',
+          opacity: entries ? 1 : 0,
+          transform: entries ? 'translateY(0)' : 'translateY(22px)',
+          transition: 'opacity 0.9s ease 1.6s, transform 0.9s ease 1.6s',
+        }}>
+          <div style={{ paddingTop: '0.2rem' }}>
+            <p style={{ fontFamily: 'var(--font-geist-mono)', fontSize: '9px', letterSpacing: '0.22em', color: 'rgba(212,168,67,0.32)', margin: '0 0 0.7rem' }}>
+              [ ENTRY 012 ]
+            </p>
+            <p style={{ fontSize: '10px', color: 'rgba(200,214,224,0.3)', margin: '0 0 0.25rem', letterSpacing: '0.08em' }}>Earth</p>
+            <p style={{ fontSize: '10px', color: 'rgba(200,214,224,0.2)', margin: 0, letterSpacing: '0.08em' }}>2026</p>
+          </div>
+          <div>
+            <p style={{ fontSize: '10px', letterSpacing: '0.2em', textTransform: 'uppercase', color: 'rgba(212,168,67,0.4)', margin: '0 0 1.2rem' }}>
+              On disenchantment
+            </p>
+            <p style={{ fontSize: '15px', lineHeight: 2.05, color: '#A8BCC8', margin: 0 }}>
+              I&apos;m revoking everyone&apos;s{' '}
+              <Ann note="stripping the aura off, on purpose">filter</Ann>
+              . Title, salary, looks, some skill they&apos;re good at, even the kind
+              of person a lot of people have agreed is{' '}
+              <Ann note="the harder someone has been agreed on, the more the filter distorts">venerable.</Ann>
+              {' '}None of it changes what they are underneath. Everyone is{' '}
+              <Ann note="the right to look at the world at eye level, and take it back">just a regular person</Ann>.
+            </p>
+          </div>
+        </div>
+
+        <EntryRule />
+
+        {/* ─ Entry 013 ─ */}
+        <div style={{
+          display: 'grid', gridTemplateColumns: '36% 1fr', gap: '7vw',
+          opacity: entries ? 1 : 0,
+          transform: entries ? 'translateY(0)' : 'translateY(22px)',
+          transition: 'opacity 0.9s ease 1.75s, transform 0.9s ease 1.75s',
+        }}>
+          <div style={{ paddingTop: '0.2rem' }}>
+            <p style={{ fontFamily: 'var(--font-geist-mono)', fontSize: '9px', letterSpacing: '0.22em', color: 'rgba(212,168,67,0.32)', margin: '0 0 0.7rem' }}>
+              [ ENTRY 013 ]
+            </p>
+            <p style={{ fontSize: '10px', color: 'rgba(200,214,224,0.3)', margin: '0 0 0.25rem', letterSpacing: '0.08em' }}>Earth</p>
+            <p style={{ fontSize: '10px', color: 'rgba(200,214,224,0.2)', margin: 0, letterSpacing: '0.08em' }}>2026</p>
+          </div>
+          <div>
+            <p style={{ fontSize: '10px', letterSpacing: '0.2em', textTransform: 'uppercase', color: 'rgba(212,168,67,0.4)', margin: '0 0 1.2rem' }}>
+              On the price of loving deeply
+            </p>
+            <p style={{ fontSize: '15px', lineHeight: 2.05, color: '#A8BCC8', margin: 0 }}>
+              The cost of loving deeply is feeling{' '}
+              <Ann note="the same nerve that lights up for joy lights up for grief">grief and pain more sharply too</Ann>
+              . If we ever stopped being able to feel anything, I don&apos;t
+              think what&apos;s left would still count as{' '}
+              <Ann note="alive, not just running">a living life</Ann>
+              . What&apos;s left after that is just{' '}
+              <Ann note="not a threat. more like a definition">death</Ann>.
+            </p>
+          </div>
+        </div>
+
       </section>
 
       {/* ── CONTACT ──────────────────────────────────────────────── */}

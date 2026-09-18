@@ -1,0 +1,103 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 540" font-family="Georgia, 'Times New Roman', serif">
+  <defs>
+    <filter id="grain" x="0" y="0" width="100%" height="100%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="2" stitchTiles="stitch" result="n"/>
+      <feColorMatrix in="n" type="matrix" values="0 0 0 0 0.13  0 0 0 0 0.11  0 0 0 0 0.08  0 0 0 0.05 0"/>
+    </filter>
+    <filter id="rough" x="-5%" y="-5%" width="110%" height="110%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.012 0.02" numOctaves="2" seed="53" result="n"/>
+      <feDisplacementMap in="SourceGraphic" in2="n" scale="2.2"/>
+    </filter>
+    <pattern id="hatch" patternUnits="userSpaceOnUse" width="4.5" height="4.5" patternTransform="rotate(45)">
+      <line x1="0" y1="0" x2="0" y2="4.5" stroke="#211C15" stroke-width="0.55" opacity="0.5"/>
+    </pattern>
+    <marker id="arr" markerWidth="9" markerHeight="7" refX="8" refY="3.5" orient="auto"><path d="M0,0 L9,3.5 L0,7 z" fill="#211C15"/></marker>
+    <marker id="arrR" markerWidth="9" markerHeight="7" refX="8" refY="3.5" orient="auto"><path d="M0,0 L9,3.5 L0,7 z" fill="#9B2D20"/></marker>
+  </defs>
+
+  <rect width="960" height="540" fill="#F2EBD9"/>
+  <rect width="960" height="540" filter="url(#grain)"/>
+  <rect x="14" y="14" width="932" height="512" fill="none" stroke="#211C15" stroke-width="1.4"/>
+  <rect x="21" y="21" width="918" height="498" fill="none" stroke="#211C15" stroke-width="0.5"/>
+  <g fill="#F2EBD9" stroke="#211C15" stroke-width="1">
+    <rect x="10.5" y="10.5" width="7" height="7"/><rect x="942.5" y="10.5" width="7" height="7"/>
+    <rect x="10.5" y="522.5" width="7" height="7"/><rect x="942.5" y="522.5" width="7" height="7"/>
+  </g>
+
+  <g fill="#211C15">
+    <line x1="55" y1="57" x2="200" y2="57" stroke="#211C15" stroke-width="0.7"/>
+    <line x1="760" y1="57" x2="905" y2="57" stroke="#211C15" stroke-width="0.7"/>
+    <text x="480" y="62" text-anchor="middle" font-size="16" letter-spacing="2.5" style="font-variant:small-caps">Plate VII — The Automated Build Pipeline</text>
+    <line x1="400" y1="76" x2="560" y2="76" stroke="#211C15" stroke-width="0.6"/>
+    <circle cx="480" cy="76" r="1.6"/>
+  </g>
+
+  <g filter="url(#rough)" stroke="#211C15" fill="none" stroke-linecap="round">
+    <g stroke="none">
+      <rect x="48.5" y="143.5" width="140" height="55" fill="url(#hatch)"/>
+      <rect x="233.5" y="143.5" width="155" height="55" fill="url(#hatch)"/>
+      <rect x="433.5" y="143.5" width="155" height="55" fill="url(#hatch)"/>
+      <rect x="633.5" y="143.5" width="140" height="55" fill="url(#hatch)"/>
+      <rect x="408.5" y="268.5" width="160" height="52" fill="url(#hatch)"/>
+      <rect x="663.5" y="390.5" width="190" height="55" fill="url(#hatch)"/>
+      <rect x="113.5" y="390.5" width="180" height="55" fill="url(#hatch)"/>
+    </g>
+    <rect x="45" y="140" width="140" height="55" fill="#F2EBD9" stroke-width="1.1"/>
+    <rect x="230" y="140" width="155" height="55" fill="#F2EBD9" stroke-width="1.1"/>
+    <rect x="430" y="140" width="155" height="55" fill="#F2EBD9" stroke-width="1.1"/>
+    <rect x="630" y="140" width="140" height="55" fill="#F2EBD9" stroke-width="1.1"/>
+    <line x1="185" y1="167" x2="228" y2="167" stroke-width="1" marker-end="url(#arr)"/>
+    <line x1="385" y1="167" x2="428" y2="167" stroke-width="1" marker-end="url(#arr)"/>
+    <line x1="585" y1="167" x2="628" y2="167" stroke-width="1" marker-end="url(#arr)"/>
+    <path d="M 700 195 L 700 240 L 488 240 L 488 266" stroke-width="1" marker-end="url(#arr)"/>
+    <rect x="405" y="265" width="160" height="52" fill="#F2EBD9" stroke-width="1.1"/>
+    <line x1="485" y1="317" x2="485" y2="345" stroke-width="1" marker-end="url(#arr)"/>
+    <polygon points="485,348 562,398 485,448 408,398" fill="#F2EBD9" stroke-width="1.2"/>
+    <!-- yes: the pulse -->
+    <line x1="562" y1="398" x2="660" y2="398" stroke="#9B2D20" stroke-width="1.5" marker-end="url(#arrR)"/>
+    <rect x="663" y="390" width="190" height="55" fill="#F2EBD9" stroke="#9B2D20" stroke-width="1.4"/>
+    <!-- no -->
+    <line x1="408" y1="398" x2="298" y2="398" stroke-width="1" marker-end="url(#arr)"/>
+    <rect x="110" y="390" width="180" height="55" fill="#F2EBD9" stroke-width="1.1"/>
+  </g>
+
+  <g fill="#211C15" text-anchor="middle" style="font-variant:small-caps">
+    <text x="115" y="163" font-size="10.5">Git push /</text>
+    <text x="115" y="179" font-size="10.5">pull request</text>
+    <text x="307" y="163" font-size="10.5">GitHub Actions</text>
+    <text x="307" y="179" font-size="10.5">trigger</text>
+    <text x="507" y="163" font-size="10.5">Build Docker</text>
+    <text x="507" y="179" font-size="10.5">image</text>
+    <text x="700" y="163" font-size="10.5">Run unit</text>
+    <text x="700" y="179" font-size="10.5">tests</text>
+    <text x="485" y="288" font-size="10.5">Lint / static</text>
+    <text x="485" y="304" font-size="10.5">analysis</text>
+    <text x="485" y="403" font-size="11.5">pass?</text>
+    <text x="758" y="413" font-size="10.5" fill="#9B2D20">Merge — deploy</text>
+    <text x="758" y="429" font-size="10.5" fill="#9B2D20">artifact</text>
+    <text x="200" y="413" font-size="10.5">Fail — notify</text>
+    <text x="200" y="429" font-size="10.5">contributor</text>
+  </g>
+  <text x="600" y="388" font-size="10" font-style="italic" fill="#9B2D20">yes</text>
+  <text x="360" y="388" font-size="10" font-style="italic" fill="#211C15">no</text>
+
+  <g fill="#211C15" font-size="14" text-anchor="middle">
+    <text x="58" y="134">&#9312;</text>
+    <text x="243" y="134">&#9313;</text>
+    <text x="443" y="134">&#9314;</text>
+    <text x="643" y="134">&#9315;</text>
+    <text x="418" y="260">&#9316;</text>
+    <text x="866" y="385" fill="#9B2D20">&#9317;</text>
+    <text x="100" y="385">&#9318;</text>
+  </g>
+
+  <g>
+    <rect x="45" y="458" width="600" height="54" fill="none" stroke="#211C15" stroke-width="0.6"/>
+    <text x="59" y="476" font-size="10" letter-spacing="2" fill="#211C15" style="font-variant:small-caps">Legend.</text>
+    <g fill="#211C15" font-size="10" letter-spacing="0.3">
+      <text x="130" y="476">&#9312; Push or PR&#160;&#160;&#160;&#9313; CI trigger&#160;&#160;&#160;&#9314; Pinned Docker image&#160;&#160;&#160;&#9315; Unit tests</text>
+      <text x="130" y="491">&#9316; Lint &amp; static analysis&#160;&#160;&#160;&#9317; Merge, deploy&#160;&#160;&#160;&#9318; Notify author</text>
+      <text x="130" y="505" font-style="italic" fill="#9B2D20">— in cinnabar: the green path, code reaching the rover</text>
+    </g>
+  </g>
+</svg>

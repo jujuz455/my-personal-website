@@ -1,0 +1,121 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 540" font-family="Georgia, 'Times New Roman', serif">
+  <defs>
+    <filter id="grain" x="0" y="0" width="100%" height="100%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="2" stitchTiles="stitch" result="n"/>
+      <feColorMatrix in="n" type="matrix" values="0 0 0 0 0.13  0 0 0 0 0.11  0 0 0 0 0.08  0 0 0 0.05 0"/>
+    </filter>
+    <filter id="rough" x="-5%" y="-5%" width="110%" height="110%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.012 0.02" numOctaves="2" seed="17" result="n"/>
+      <feDisplacementMap in="SourceGraphic" in2="n" scale="2.2"/>
+    </filter>
+    <pattern id="hatch" patternUnits="userSpaceOnUse" width="4.5" height="4.5" patternTransform="rotate(45)">
+      <line x1="0" y1="0" x2="0" y2="4.5" stroke="#211C15" stroke-width="0.55" opacity="0.5"/>
+    </pattern>
+    <marker id="arr" markerWidth="9" markerHeight="7" refX="8" refY="3.5" orient="auto"><path d="M0,0 L9,3.5 L0,7 z" fill="#211C15"/></marker>
+    <marker id="arrR" markerWidth="9" markerHeight="7" refX="8" refY="3.5" orient="auto"><path d="M0,0 L9,3.5 L0,7 z" fill="#9B2D20"/></marker>
+  </defs>
+
+  <rect width="960" height="540" fill="#F2EBD9"/>
+  <rect width="960" height="540" filter="url(#grain)"/>
+  <rect x="14" y="14" width="932" height="512" fill="none" stroke="#211C15" stroke-width="1.4"/>
+  <rect x="21" y="21" width="918" height="498" fill="none" stroke="#211C15" stroke-width="0.5"/>
+  <g fill="#F2EBD9" stroke="#211C15" stroke-width="1">
+    <rect x="10.5" y="10.5" width="7" height="7"/><rect x="942.5" y="10.5" width="7" height="7"/>
+    <rect x="10.5" y="522.5" width="7" height="7"/><rect x="942.5" y="522.5" width="7" height="7"/>
+  </g>
+
+  <g fill="#211C15">
+    <line x1="55" y1="57" x2="195" y2="57" stroke="#211C15" stroke-width="0.7"/>
+    <line x1="765" y1="57" x2="905" y2="57" stroke="#211C15" stroke-width="0.7"/>
+    <text x="480" y="62" text-anchor="middle" font-size="16" letter-spacing="2.5" style="font-variant:small-caps">Plate III — Serial I/O Threading Refactor</text>
+    <line x1="400" y1="76" x2="560" y2="76" stroke="#211C15" stroke-width="0.6"/>
+    <circle cx="480" cy="76" r="1.6"/>
+  </g>
+
+  <text x="242" y="110" text-anchor="middle" font-size="12" letter-spacing="3" fill="#211C15" style="font-variant:small-caps">Fig. 1 — before</text>
+  <text x="718" y="110" text-anchor="middle" font-size="12" letter-spacing="3" fill="#211C15" style="font-variant:small-caps">Fig. 2 — after</text>
+
+  <g filter="url(#rough)" stroke="#211C15" fill="none" stroke-linecap="round">
+    <line x1="480" y1="92" x2="480" y2="420" stroke-width="0.6" stroke-dasharray="2,4"/>
+    <!-- BEFORE lane -->
+    <rect x="45" y="140" width="395" height="118" stroke-width="0.9"/>
+    <g stroke="none">
+      <rect x="68.5" y="168.5" width="105" height="48" fill="url(#hatch)"/>
+      <rect x="198.5" y="168.5" width="100" height="48" fill="url(#hatch)"/>
+      <rect x="323.5" y="168.5" width="100" height="48" fill="url(#hatch)"/>
+    </g>
+    <rect x="65" y="165" width="105" height="48" fill="#F2EBD9" stroke-width="1.1"/>
+    <rect x="195" y="165" width="100" height="48" fill="#F2EBD9" stroke-width="1.1"/>
+    <rect x="320" y="165" width="100" height="48" fill="#F2EBD9" stroke-width="1.1"/>
+    <line x1="170" y1="189" x2="193" y2="189" stroke-width="1" marker-end="url(#arr)"/>
+    <line x1="295" y1="189" x2="318" y2="189" stroke-width="1" marker-end="url(#arr)"/>
+    <path d="M 370 213 L 370 240 L 117 240 L 117 216" stroke-width="1" marker-end="url(#arr)"/>
+    <!-- AFTER lanes -->
+    <rect x="510" y="128" width="420" height="100" stroke-width="0.9"/>
+    <g stroke="none">
+      <rect x="528.5" y="153.5" width="125" height="46" fill="url(#hatch)"/>
+      <rect x="671.5" y="153.5" width="100" height="46" fill="url(#hatch)"/>
+      <rect x="793.5" y="153.5" width="120" height="46" fill="url(#hatch)"/>
+    </g>
+    <rect x="525" y="150" width="125" height="46" fill="#F2EBD9" stroke-width="1.1"/>
+    <rect x="668" y="150" width="100" height="46" fill="#F2EBD9" stroke-width="1.1"/>
+    <rect x="790" y="150" width="120" height="46" fill="#F2EBD9" stroke-width="1.1"/>
+    <line x1="650" y1="173" x2="666" y2="173" stroke-width="1" marker-end="url(#arr)"/>
+    <line x1="768" y1="173" x2="788" y2="173" stroke-width="1" marker-end="url(#arr)"/>
+    <rect x="510" y="292" width="420" height="95" stroke-width="0.9"/>
+    <g stroke="none">
+      <rect x="603.5" y="315.5" width="120" height="46" fill="url(#hatch)"/>
+      <rect x="748.5" y="315.5" width="110" height="46" fill="url(#hatch)"/>
+    </g>
+    <rect x="600" y="312" width="120" height="46" fill="#F2EBD9" stroke-width="1.1"/>
+    <rect x="745" y="312" width="110" height="46" fill="#F2EBD9" stroke-width="1.1"/>
+    <line x1="720" y1="335" x2="743" y2="335" stroke-width="1" marker-end="url(#arr)"/>
+    <!-- the pulse: queue hand-off -->
+    <line x1="848" y1="196" x2="668" y2="310" stroke="#9B2D20" stroke-width="1.4" marker-end="url(#arrR)"/>
+  </g>
+
+  <g fill="#211C15" text-anchor="middle" style="font-variant:small-caps">
+    <text x="117" y="185" font-size="10">Busy-wait</text>
+    <text x="117" y="200" font-size="10">poll</text>
+    <text x="245" y="185" font-size="10">Parse</text>
+    <text x="245" y="200" font-size="10">RTCM</text>
+    <text x="370" y="185" font-size="10">Other</text>
+    <text x="370" y="200" font-size="10">work</text>
+    <text x="587" y="169" font-size="10">Blocking</text>
+    <text x="587" y="184" font-size="10">serial read</text>
+    <text x="718" y="169" font-size="10">Parse</text>
+    <text x="718" y="184" font-size="10">RTCM</text>
+    <text x="850" y="169" font-size="10">Push to</text>
+    <text x="850" y="184" font-size="10">queue</text>
+    <text x="660" y="331" font-size="10">Pop from</text>
+    <text x="660" y="346" font-size="10">queue</text>
+    <text x="800" y="331" font-size="10">Other</text>
+    <text x="800" y="346" font-size="10">work</text>
+  </g>
+  <g fill="#211C15" font-size="9.5" font-style="italic">
+    <text x="150" y="255" >tight loop, repeats without rest</text>
+    <text x="522" y="146">i/o thread</text>
+    <text x="522" y="310">main thread</text>
+  </g>
+  <text x="242" y="292" text-anchor="middle" font-size="11" font-style="italic" fill="#211C15">CPU: high — blocked often</text>
+  <text x="718" y="420" text-anchor="middle" font-size="11" font-style="italic" fill="#211C15">CPU: low — steady</text>
+  <text x="792" y="248" font-size="10" font-style="italic" fill="#9B2D20">the hand-off</text>
+
+  <g fill="#211C15" font-size="14" text-anchor="middle">
+    <text x="80" y="160">&#9312;</text>
+    <text x="540" y="145">&#9313;</text>
+    <text x="922" y="145">&#9314;</text>
+    <text x="585" y="332">&#9315;</text>
+  </g>
+
+  <g>
+    <rect x="45" y="432" width="400" height="80" fill="none" stroke="#211C15" stroke-width="0.6"/>
+    <text x="59" y="451" font-size="10" letter-spacing="2" fill="#211C15" style="font-variant:small-caps">Legend.</text>
+    <g fill="#211C15" font-size="10" letter-spacing="0.3">
+      <text x="59" y="467">&#9312;&#160;&#160;Busy-wait poll — deprecated</text>
+      <text x="59" y="481">&#9313;&#160;&#160;Blocking serial read, sleeps in kernel</text>
+      <text x="59" y="495">&#9314;&#160;&#160;Thread-safe queue&#160;&#160;&#160;&#9315;&#160;&#160;Consumer, main thread</text>
+      <text x="59" y="508" font-style="italic" fill="#9B2D20">— in cinnabar: parsed messages crossing threads</text>
+    </g>
+  </g>
+</svg>
