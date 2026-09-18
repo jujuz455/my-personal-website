@@ -327,7 +327,7 @@ const CARDS = [
   { href: '/map',   icon: '◈', label: 'The Atlas',   desc: ['Places I\'ve been to.'],    active: true  },
   { href: '/about', icon: '◉', label: 'Field Notes', desc: ['Who I am.'],       active: true  },
   { href: '/chat',  icon: '✦', label: 'Talk to Me',  desc: ['An AI version of me.'],         active: true  },
-  { href: '#',      icon: '⚙', label: 'Projects',    desc: ['Things I\'ve built.', 'Coming soon♾️.'],          active: false },
+  { href: '/projects', icon: '⚙', label: 'Projects',    desc: ['Things I\'ve built.', 'Rover systems & CV.'],          active: true },
 ];
 
 export default function Home() {
@@ -445,12 +445,31 @@ export default function Home() {
           flex: 1, display: 'flex', flexDirection: 'column',
           position: 'relative', zIndex: 2,
         }}>
-          {/* Corner anchor — right only */}
+          {/* Corner anchors: contact on the left, section labels on the right */}
           <div style={{
-            display: 'flex', justifyContent: 'flex-end', alignItems: 'flex-start',
+            display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start',
             padding: '2rem 3vw 0',
             opacity: show.rules ? 1 : 0, transition: 'opacity 0.8s ease',
           }}>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '0.3rem', alignItems: 'flex-start' }}>
+              {[
+                { label: 'GitHub', href: 'https://github.com/jujuz455' },
+                { label: 'LinkedIn', href: 'https://www.linkedin.com/in/zhao-runchen-941a3b387/' },
+              ].map(c => (
+                <a
+                  key={c.label}
+                  href={c.href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  style={{
+                    fontSize: '9px', letterSpacing: '0.22em', textTransform: 'uppercase',
+                    color: 'rgba(212,168,67,0.45)', textDecoration: 'none',
+                  }}
+                >
+                  {c.label} ↗
+                </a>
+              ))}
+            </div>
             <div style={{ display: 'flex', flexDirection: 'column', gap: '0.3rem', alignItems: 'flex-end' }}>
               <span style={{ fontSize: '9px', letterSpacing: '0.22em', textTransform: 'uppercase', color: 'rgba(212,168,67,0.45)' }}>
                 About me · AI & ML

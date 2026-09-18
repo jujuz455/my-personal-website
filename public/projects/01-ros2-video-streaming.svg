@@ -1,0 +1,95 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 540" font-family="Georgia, 'Times New Roman', serif">
+  <defs>
+    <filter id="grain" x="0" y="0" width="100%" height="100%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="2" stitchTiles="stitch" result="n"/>
+      <feColorMatrix in="n" type="matrix" values="0 0 0 0 0.13  0 0 0 0 0.11  0 0 0 0 0.08  0 0 0 0.05 0"/>
+    </filter>
+    <filter id="rough" x="-5%" y="-5%" width="110%" height="110%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.012 0.02" numOctaves="2" seed="11" result="n"/>
+      <feDisplacementMap in="SourceGraphic" in2="n" scale="2.2"/>
+    </filter>
+    <pattern id="hatch" patternUnits="userSpaceOnUse" width="4.5" height="4.5" patternTransform="rotate(45)">
+      <line x1="0" y1="0" x2="0" y2="4.5" stroke="#211C15" stroke-width="0.55" opacity="0.5"/>
+    </pattern>
+    <marker id="arr" markerWidth="9" markerHeight="7" refX="8" refY="3.5" orient="auto"><path d="M0,0 L9,3.5 L0,7 z" fill="#211C15"/></marker>
+    <marker id="arrR" markerWidth="9" markerHeight="7" refX="8" refY="3.5" orient="auto"><path d="M0,0 L9,3.5 L0,7 z" fill="#9B2D20"/></marker>
+  </defs>
+
+  <rect width="960" height="540" fill="#F2EBD9"/>
+  <rect width="960" height="540" filter="url(#grain)"/>
+
+  <!-- plate border -->
+  <rect x="14" y="14" width="932" height="512" fill="none" stroke="#211C15" stroke-width="1.4"/>
+  <rect x="21" y="21" width="918" height="498" fill="none" stroke="#211C15" stroke-width="0.5"/>
+  <g fill="#F2EBD9" stroke="#211C15" stroke-width="1">
+    <rect x="10.5" y="10.5" width="7" height="7"/><rect x="942.5" y="10.5" width="7" height="7"/>
+    <rect x="10.5" y="522.5" width="7" height="7"/><rect x="942.5" y="522.5" width="7" height="7"/>
+  </g>
+
+  <!-- cartouche -->
+  <g fill="#211C15">
+    <line x1="55" y1="57" x2="215" y2="57" stroke="#211C15" stroke-width="0.7"/>
+    <line x1="745" y1="57" x2="905" y2="57" stroke="#211C15" stroke-width="0.7"/>
+    <text x="480" y="62" text-anchor="middle" font-size="16" letter-spacing="2.5" style="font-variant:small-caps">Plate I — ROS 2 Video Streaming Node</text>
+    <line x1="400" y1="76" x2="560" y2="76" stroke="#211C15" stroke-width="0.6"/>
+    <circle cx="480" cy="76" r="1.6"/>
+  </g>
+
+  <!-- engraved line-work -->
+  <g filter="url(#rough)" stroke="#211C15" fill="none" stroke-linecap="round">
+    <!-- hatch shadows -->
+    <g stroke="none">
+      <rect x="58.5" y="253.5" width="125" height="75" fill="url(#hatch)"/>
+      <rect x="251.5" y="253.5" width="235" height="90" fill="url(#hatch)"/>
+      <rect x="588.5" y="253.5" width="135" height="75" fill="url(#hatch)"/>
+      <rect x="798.5" y="253.5" width="130" height="75" fill="url(#hatch)"/>
+    </g>
+    <!-- boxes -->
+    <rect x="55" y="250" width="125" height="75" fill="#F2EBD9" stroke-width="1.1"/>
+    <rect x="225" y="212" width="280" height="155" stroke-width="0.9" stroke-dasharray="6,4"/>
+    <rect x="248" y="250" width="235" height="90" fill="#F2EBD9" stroke-width="1.1"/>
+    <rect x="585" y="250" width="135" height="75" fill="#F2EBD9" stroke-width="1.1"/>
+    <rect x="795" y="250" width="130" height="75" fill="#F2EBD9" stroke-width="1.1"/>
+    <!-- arrows -->
+    <line x1="180" y1="287" x2="245" y2="287" stroke-width="1.1" marker-end="url(#arr)"/>
+    <line x1="720" y1="287" x2="792" y2="287" stroke-width="1.1" marker-end="url(#arr)"/>
+    <line x1="505" y1="287" x2="582" y2="287" stroke="#9B2D20" stroke-width="1.4" marker-end="url(#arrR)"/>
+  </g>
+
+  <!-- labels -->
+  <g fill="#211C15" text-anchor="middle" style="font-variant:small-caps">
+    <text x="117" y="283" font-size="11">Camera</text>
+    <text x="117" y="298" font-size="11">hardware</text>
+    <text x="365" y="234" font-size="10" letter-spacing="1.2">ROS 2 node</text>
+    <text x="365" y="278" font-size="11">GStreamer pipeline</text>
+    <text x="365" y="298" font-size="10" font-style="italic" style="font-variant:normal">capture → x265enc</text>
+    <text x="365" y="315" font-size="10" font-style="italic" style="font-variant:normal">→ mux / payload</text>
+    <text x="652" y="283" font-size="11">Network</text>
+    <text x="652" y="298" font-size="11">SRT / RTP</text>
+    <text x="860" y="283" font-size="11">Ground station</text>
+    <text x="860" y="298" font-size="11">receiver</text>
+  </g>
+  <text x="544" y="270" text-anchor="middle" font-size="10.5" font-style="italic" fill="#9B2D20">H.265 encoded stream</text>
+
+  <!-- callout numbers -->
+  <g fill="#211C15" font-size="14" text-anchor="middle">
+    <text x="117" y="241">&#9312;</text>
+    <text x="262" y="244">&#9313;</text>
+    <text x="497" y="205">&#9314;</text>
+    <text x="652" y="241">&#9315;</text>
+    <text x="860" y="241">&#9316;</text>
+  </g>
+
+  <!-- legend -->
+  <g>
+    <rect x="42" y="408" width="345" height="102" fill="none" stroke="#211C15" stroke-width="0.6"/>
+    <text x="56" y="428" font-size="10" letter-spacing="2" fill="#211C15" style="font-variant:small-caps">Legend.</text>
+    <g fill="#211C15" font-size="10" letter-spacing="0.3">
+      <text x="56" y="446">&#9312;&#160;&#160;Camera hardware, rover mast</text>
+      <text x="56" y="461">&#9313;&#160;&#160;GStreamer pipeline — capture, x265enc, mux</text>
+      <text x="56" y="476">&#9314;&#160;&#160;ROS 2 node boundary — services &amp; topics</text>
+      <text x="56" y="491">&#9315;&#160;&#160;Network link, SRT or RTP</text>
+      <text x="56" y="504" font-style="italic" fill="#9B2D20">— in cinnabar: the encoded video stream</text>
+    </g>
+  </g>
+</svg>

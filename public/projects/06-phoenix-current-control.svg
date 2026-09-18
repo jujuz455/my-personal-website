@@ -1,0 +1,87 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 540" font-family="Georgia, 'Times New Roman', serif">
+  <defs>
+    <filter id="grain" x="0" y="0" width="100%" height="100%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="2" stitchTiles="stitch" result="n"/>
+      <feColorMatrix in="n" type="matrix" values="0 0 0 0 0.13  0 0 0 0 0.11  0 0 0 0 0.08  0 0 0 0.05 0"/>
+    </filter>
+    <filter id="rough" x="-5%" y="-5%" width="110%" height="110%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.012 0.02" numOctaves="2" seed="41" result="n"/>
+      <feDisplacementMap in="SourceGraphic" in2="n" scale="2.2"/>
+    </filter>
+    <pattern id="hatch" patternUnits="userSpaceOnUse" width="4.5" height="4.5" patternTransform="rotate(45)">
+      <line x1="0" y1="0" x2="0" y2="4.5" stroke="#211C15" stroke-width="0.55" opacity="0.5"/>
+    </pattern>
+    <marker id="arr" markerWidth="9" markerHeight="7" refX="8" refY="3.5" orient="auto"><path d="M0,0 L9,3.5 L0,7 z" fill="#211C15"/></marker>
+    <marker id="arrS" markerWidth="9" markerHeight="7" refX="1" refY="3.5" orient="auto-start-reverse"><path d="M0,0 L9,3.5 L0,7 z" fill="#211C15"/></marker>
+  </defs>
+
+  <rect width="960" height="540" fill="#F2EBD9"/>
+  <rect width="960" height="540" filter="url(#grain)"/>
+  <rect x="14" y="14" width="932" height="512" fill="none" stroke="#211C15" stroke-width="1.4"/>
+  <rect x="21" y="21" width="918" height="498" fill="none" stroke="#211C15" stroke-width="0.5"/>
+  <g fill="#F2EBD9" stroke="#211C15" stroke-width="1">
+    <rect x="10.5" y="10.5" width="7" height="7"/><rect x="942.5" y="10.5" width="7" height="7"/>
+    <rect x="10.5" y="522.5" width="7" height="7"/><rect x="942.5" y="522.5" width="7" height="7"/>
+  </g>
+
+  <g fill="#211C15">
+    <line x1="55" y1="57" x2="200" y2="57" stroke="#211C15" stroke-width="0.7"/>
+    <line x1="760" y1="57" x2="905" y2="57" stroke="#211C15" stroke-width="0.7"/>
+    <text x="480" y="62" text-anchor="middle" font-size="16" letter-spacing="2.5" style="font-variant:small-caps">Plate VI — The Current-Controlled Grip</text>
+    <line x1="400" y1="76" x2="560" y2="76" stroke="#211C15" stroke-width="0.6"/>
+    <circle cx="480" cy="76" r="1.6"/>
+  </g>
+
+  <text x="235" y="112" text-anchor="middle" font-size="12" letter-spacing="3" fill="#211C15" style="font-variant:small-caps">Fig. 1 — modes</text>
+  <text x="725" y="112" text-anchor="middle" font-size="12" letter-spacing="3" fill="#211C15" style="font-variant:small-caps">Fig. 2 — the clamp</text>
+
+  <g filter="url(#rough)" stroke="#211C15" fill="none" stroke-linecap="round">
+    <!-- state triangle -->
+    <circle cx="225" cy="185" r="48" fill="#F2EBD9" stroke-width="1.1"/>
+    <circle cx="120" cy="370" r="48" fill="#F2EBD9" stroke-width="1.1"/>
+    <circle cx="340" cy="370" r="48" fill="#F2EBD9" stroke-width="1.6"/>
+    <circle cx="340" cy="370" r="42" stroke-width="0.7"/>
+    <line x1="196" y1="225" x2="146" y2="330" stroke-width="1" marker-start="url(#arrS)" marker-end="url(#arr)"/>
+    <line x1="255" y1="225" x2="313" y2="330" stroke-width="1" marker-start="url(#arrS)" marker-end="url(#arr)"/>
+    <line x1="168" y1="370" x2="292" y2="370" stroke-width="1" marker-start="url(#arrS)" marker-end="url(#arr)"/>
+    <!-- chart -->
+    <line x1="540" y1="435" x2="925" y2="435" stroke-width="1.1" marker-end="url(#arr)"/>
+    <line x1="540" y1="435" x2="540" y2="135" stroke-width="1.1" marker-end="url(#arr)"/>
+    <line x1="540" y1="250" x2="910" y2="250" stroke-width="0.8" stroke-dasharray="7,5"/>
+    <polyline points="540,425 620,398 680,305 718,172 758,300 820,378 900,398" stroke-width="1.4"/>
+    <polyline points="540,425 618,396 678,305 706,254 900,252" stroke="#9B2D20" stroke-width="1.6"/>
+  </g>
+
+  <g fill="#211C15" text-anchor="middle" style="font-variant:small-caps">
+    <text x="225" y="181" font-size="11">Position</text>
+    <text x="225" y="196" font-size="11">mode</text>
+    <text x="120" y="366" font-size="11">Velocity</text>
+    <text x="120" y="381" font-size="11">mode</text>
+    <text x="340" y="366" font-size="11">Current</text>
+    <text x="340" y="381" font-size="11">mode</text>
+  </g>
+  <text x="340" y="452" text-anchor="middle" font-size="10.5" font-style="italic" fill="#211C15">the grip path — force, not position</text>
+  <g fill="#211C15" font-size="9.5" font-style="italic">
+    <text x="915" y="245" text-anchor="end">safe limit</text>
+    <text x="930" y="450" text-anchor="end">time</text>
+    <text x="548" y="130">current, A</text>
+  </g>
+  <text x="730" y="162" font-size="10.5" font-style="italic" fill="#211C15">before — the spike</text>
+  <text x="790" y="278" font-size="10.5" font-style="italic" fill="#9B2D20">after — clamped at the limit</text>
+
+  <g fill="#211C15" font-size="14" text-anchor="middle">
+    <text x="176" y="141">&#9312;</text>
+    <text x="66" y="330">&#9313;</text>
+    <text x="396" y="330">&#9314;</text>
+  </g>
+
+  <g>
+    <rect x="60" y="445" width="400" height="66" fill="none" stroke="#211C15" stroke-width="0.6"/>
+    <text x="74" y="464" font-size="10" letter-spacing="2" fill="#211C15" style="font-variant:small-caps">Legend.</text>
+    <g fill="#211C15" font-size="10" letter-spacing="0.3">
+      <text x="74" y="480">&#9312;&#160;&#160;Position mode&#160;&#160;&#160;&#9313;&#160;&#160;Velocity mode&#160;&#160;&#160;&#9314;&#160;&#160;Current mode, force-limited</text>
+      <text x="74" y="495">Torque follows current; the grip must command force, never displacement.</text>
+      <text x="74" y="508" font-style="italic" fill="#9B2D20">— in cinnabar: the corrected current curve</text>
+    </g>
+  </g>
+</svg>
